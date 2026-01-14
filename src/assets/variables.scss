@@ -1,0 +1,14 @@
+@use 'sass:color';
+$colorPrimary: #00bd7e;
+$colorBorder: color.adjust($colorPrimary, $lightness: -1%);
+
+
+$fontSizeInput: 1.2rem;
+$fontSizeButton: 1.2rem;
+
+
+$inputSize: 1.2rem;
+$inputsRadius: 1rem;
+
+$buttonsColor: #fff;
+$buttonsBackground: $colorPrimary;

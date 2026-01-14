@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import { onMounted } from 'vue'
+import Search from '@/components/Search.vue'
+import ReposList from '@/components/ReposList.vue'
+
+onMounted(async () => {
+})
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <Search />
+    <ReposList />
   </main>
 </template>

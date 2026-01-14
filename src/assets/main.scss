@@ -1,0 +1,16 @@
+@use 'sass:color';
+@use './variables.scss';
+@import './base.css';
+#app {
+  margin: 0 auto;
+  padding: 1rem;
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: variables.$colorPrimary;
+  transition: 0.4s;
+  padding: 3px;
+}
