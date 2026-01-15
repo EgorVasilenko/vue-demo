@@ -12,6 +12,3 @@ defineProps<{
   size?: number;
 }>();
 </script>
-<style scoped lang="scss">
-@use '../../assets/variables.scss' as variables;
-</style>
