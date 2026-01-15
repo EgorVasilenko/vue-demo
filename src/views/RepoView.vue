@@ -8,7 +8,6 @@ onMounted(async () => {
   const route = await useRoute()
   const { owner, name } = route.params as { owner: string, name: string }
   const store = useCurrentRepoStore();
-  console.log({ owner, name }, 'fetch');
   await store.fetchRepo(`${owner}/${name}`);
 })
 </script>

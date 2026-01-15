@@ -10,8 +10,6 @@ const hasPreviousPage = computed(() => page.value > 1);
 const hasNextPage = computed(() => page.value * per_page.value < total_count.value);
 const notFound = computed(() => total_count.value === 0 && !loading.value && !error.value && query.value);
 watch(page, () => {
-  console.log('wseatch');
-  console.log('scroll to top');
   window.scrollTo({
     top: 0,
     behavior: 'smooth',

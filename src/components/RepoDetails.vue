@@ -11,8 +11,9 @@
       <p class="repo-details_author-name">{{ repo.owner.login }}</p>
     </div>
     <div class="repo-details_files">
+      <div class="repo-details_files-item" @click="chageFolder('')" v-if="folder">..</div>
       <div :class="{ 'repo-details_files-item': true, 'repo-details_files-item--folder': file.type === 'dir' }"
-        v-for="file in repoFiles" :key="file.path">
+        v-for="file in repoFiles" :key="file.path" @click="fileClick(file)">
         <FileIcon v-if="file.type === 'file'" />
         <FolderIcon v-if="file.type === 'dir'" />
         <p class="repo-details_files-item-name">{{ file.path }}</p>
@@ -25,7 +26,20 @@ import { useCurrentRepoStore } from '@/stores/currentRepo';
 import { storeToRefs } from 'pinia';
 import FileIcon from '@/components/icons/FileIcon.vue';
 import FolderIcon from '@/components/icons/FolderIcon.vue';
-const { currentRepo: repo, repoFiles, loading } = storeToRefs(useCurrentRepoStore());
+import type { RepoFile } from '@/types/repo';
+const store = useCurrentRepoStore()
+const { currentRepo: repo, repoFiles, loading, folder } = storeToRefs(store);
+const chageFolder = async (folder: string) => {
+  await store.setFolder(folder)
+}
+
+const fileClick = async (file: RepoFile) => {
+  if (file.type === 'dir') {
+    await store.setFolder(file.path)
+  } else {
+    window.open(file.download_url, '_blank')
+  }
+}
 </script>
 
 <style scoped lang="scss">
