@@ -1,4 +1,4 @@
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Repo, RepoFile } from '@/types/repo'
 import { getRepoFiles, getRepoDetails } from '@/api/repos'
@@ -6,8 +6,8 @@ import { getRepoFiles, getRepoDetails } from '@/api/repos'
 export const useCurrentRepoStore = defineStore('currentRepo', () => {
   const loading = ref(false)
   const loadingError = ref<string | null>(null)
-  const currentRepo = reactive<Repo>({} as Repo)
-  const repoFiles = reactive<RepoFile[]>([])
+  const currentRepo = ref<Repo>({} as Repo)
+  const repoFiles = ref<RepoFile[]>([])
   const folder = ref<string>('')
 
   const fetchRepo = async (full_name: string) => {
@@ -16,8 +16,8 @@ export const useCurrentRepoStore = defineStore('currentRepo', () => {
     try {
       const details = await getRepoDetails(full_name)
       const files = await getRepoFiles(full_name)
-      Object.assign(currentRepo, details)
-      Object.assign(repoFiles, files.files)
+      currentRepo.value = details
+      repoFiles.value = files.sort((a, b) => a.type.localeCompare(b.type))
     } catch (error: unknown) {
       loadingError.value = (error as Error).message as string
     } finally {

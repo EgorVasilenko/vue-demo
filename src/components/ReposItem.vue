@@ -8,8 +8,8 @@ const { repo } = defineProps<{
 <template>
   <RouterLink :to="`/repo/${repo.full_name}`" class="repos-item">
     <div class="repos-item_content">
-      <p>{{ repo.name }}</p>
-      <p>{{ repo.description }}</p>
+      <p class="repos-item_content-name">{{ repo.name }}</p>
+      <p class="repos-item_content-description">{{ repo.description }}</p>
     </div>
     <div class="author">
       <div class="author-avatar" :style="{ backgroundImage: `url(${repo.owner.avatar_url})` }"></div>
@@ -18,15 +18,28 @@ const { repo } = defineProps<{
   </RouterLink>
 </template>
 <style scoped lang="scss">
+@use '../assets/variables.scss' as variables;
+
 .repos-item {
   display: flex;
-  flex-direction: column;
   gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
 
   &_content {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
+    &-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    &-description {
+      font-size: 0.8rem;
+      color: variables.$colorPlaceholders;
+    }
   }
 }
 
@@ -45,8 +58,8 @@ const { repo } = defineProps<{
 
   &-name {
     font-size: 0.8rem;
-    font-weight: 600;
-    color: #000;
+    font-weight: 500;
+    color: variables.$colorPlaceholders;
   }
 }
 </style>

@@ -12,7 +12,7 @@ export const searchRepos = async (query: string, page: number = 1, per_page: num
 }
 
 export const getRepoFiles = async (full_name: string) => {
-  const response = await api.get<{ files: RepoFile[] }>(`/repos/${full_name}/contents`)
+  const response = await api.get<RepoFile[]>(`/repos/${full_name}/contents`)
   return response.data
 }
 

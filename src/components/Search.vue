@@ -5,17 +5,41 @@
   </form>
 </template>
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useReposStore } from '@/stores/repos';
 import { storeToRefs } from 'pinia';
+import { useRoute, useRouter } from 'vue-router';
 const searchStore = useReposStore();
 const searchQuery = ref<string>('');
-
+const router = useRouter()
+const route = useRoute()
 const { loading, query } = storeToRefs(searchStore);
 const isDisabled = computed(() => loading.value === true || searchQuery.value.length === 0 || query.value === searchQuery.value);
 const search = async () => {
+  await await router.push({
+    query: {
+      ...route.query,
+      q: searchQuery.value || undefined,
+    },
+  })
   await searchStore.searchRepo(searchQuery.value);
 }
+
+const applyRouteQuery = async () => {
+  const q = route.query.q
+  if (q && typeof q === 'string') {
+    searchQuery.value = q
+    await searchStore.searchRepo(searchQuery.value)
+
+  } else {
+    if (searchStore.query) {
+      searchQuery.value = searchStore.query
+    }
+  }
+}
+
+onMounted(applyRouteQuery)
+
 </script>
 <style scoped lang="scss">
 @use '@/assets/variables.scss' as variables;
